@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react';
-// import { XCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { Store } from '@/Utils/Store';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function CartScreen() {
   const router = useRouter();
@@ -16,9 +17,14 @@ function CartScreen() {
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
-  const updateCartHandler = (item, qty) => {
+  const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      return toast.error('Sorry. Product is out of stock');
+    }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    toast.success('Product updated in the cart');
   };
   return (
     <Layout title="Shopping Cart">
@@ -72,7 +78,7 @@ function CartScreen() {
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                         {/* <XCircleIcon className="h-5 w-5"></XCircleIcon> */}
-                        <h4>Delete</h4>
+                        <h4>Remove</h4>
                       </button>
                     </td>
                   </tr>

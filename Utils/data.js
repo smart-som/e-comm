@@ -66,7 +66,7 @@ const data = {
     },
     {
       name: 'Type C USB',
-      slug: 'USB',
+      slug: 'cord',
       category: 'Power',
       image: '/images/4.jpg',
       price: 15000,
@@ -78,7 +78,7 @@ const data = {
     },
     {
       name: 'Type C Charger',
-      slug: 'Charger',
+      slug: 'Chargers',
       category: 'Power',
       image: '/images/5.webp',
       price: 15000,
@@ -90,7 +90,7 @@ const data = {
     },
     {
       name: 'Bluetooth Speaker',
-      slug: 'soeaker',
+      slug: 'speakers',
       category: 'sound',
       image: '/images/6.webp',
       price: 15000,
@@ -102,7 +102,7 @@ const data = {
     },
     {
       name: 'Bluetooth Speaker',
-      slug: 'soeaker',
+      slug: 'speaker',
       category: 'sound',
       image: '/images/7.jpg',
       price: 15000,
@@ -138,7 +138,7 @@ const data = {
     },
     {
       name: 'rok Bluetooth earpiece',
-      slug: 'earpiece',
+      slug: 'earpieces',
       category: 'sound',
       image: '/images/9.webp',
       price: 15000,

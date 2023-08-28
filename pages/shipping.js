@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { Store } from '@/Utils/Store';
 import Layout from '@/components/Layout';
-import CheckoutWizard from '@/components/Checkoutwizard';
+import CheckoutWizard from '@/components/CheckoutWizard';
 
 export default function ShippingScreen() {
   const {

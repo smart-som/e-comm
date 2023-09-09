@@ -109,7 +109,7 @@ const data = {
       brand: 'New Age',
       rating: 4.5,
       numReviews: 8,
-      countInStock: 53,
+      countInStock: 50,
       description: 'smooth bluetooth speaker',
     },
     {

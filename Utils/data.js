@@ -166,7 +166,7 @@ const data = {
       category: 'Accessories',
       image: '/images/11.jpg',
       price: 15000,
-      brand: 'New Age',
+      brand: 'New Age accessories',
       rating: 4.5,
       numReviews: 8,
       countInStock: 50,

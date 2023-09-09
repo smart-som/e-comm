@@ -4,10 +4,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer, useState } from 'react';
-import { PaystackButton } from 'react-paystack';
-import { useSession } from 'next-auth/react';
-import {getTimeStamp}from "@/Utils/date"
+import { useEffect, useReducer } from 'react';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -21,35 +18,10 @@ function reducer(state, action) {
       state;
   }
 }
-
-
 function OrderScreen() {
   // order/:id
   const { query } = useRouter();
   const orderId = query.id;
-
-  //get email from session
-  const {data:session} = useSession()
-
-
-// set initial patstack props
-  const [paystackProps, setPaystackProps] = useState({
-    text: "pay with paypal",
-    metadata:{
-      name: session.user.image,
-      //other data
-    },
-    email: session.user.email,
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-    onSuccess: (payload) => {
-      if(payload.status === "success")
-        onSuccessFulTransaction(payload)
-    },
-    
-    onClose: () => alert("Wait! Yoouve not made your payment"),
-  })
-
- const [paymentProcessed, setPaymentProcessed] = useState(false);
 
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -60,11 +32,8 @@ function OrderScreen() {
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-
-        if(!paymentProcessed){
         const { data } = await axios.get(`/api/orders/${orderId}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        }
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -72,8 +41,6 @@ function OrderScreen() {
     if (!order._id || (order._id && order._id !== orderId)) {
       fetchOrder();
     }
-
-   console.log(order.isDelivered)
   }, [order, orderId]);
   const {
     shippingAddress,
@@ -88,44 +55,6 @@ function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
-
- 
-
-  useEffect(()=>{
-
-    setPaystackProps((prev)=>({
-      ...prev,
-      amount:totalPrice
-    }))
-
-  },[order])
- 
-
-  //call method on successful transaction
-  const onSuccessFulTransaction = async(payload,order) =>{
-    setPaymentProcessed(true)
-    dispatch({ type: 'FETCH_REQUEST' });
-    
-    console.log(payload, order)
-    try {
-      const { data } = await axios.get(`/api/orders/${orderId}`);
-      const isPaid = true
-      const paidAt = getTimeStamp()
-      dispatch({ type: 'FETCH_SUCCESS', payload: {...data,isPaid, paidAt} });
-
-      await axios.put(`/api/orders/${orderId}/update`,
-         {
-          isPaid,
-          paidAt,
-        }
-      )
-    } catch (error) {
-      dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
-    }
-    
-    //todo: update order 
-
-  }
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -154,17 +83,10 @@ function OrderScreen() {
             <div className="card p-5">
               <h2 className="mb-2 text-lg">Payment Method</h2>
               <div>{paymentMethod}</div>
-              
               {isPaid ? (
-                
-                
                 <div className="alert-success">Paid at {paidAt}</div>
-                
               ) : (
-                <>
-                <PaystackButton {...paystackProps}/>
                 <div className="alert-error">Not paid</div>
-                </>
               )}
             </div>
 

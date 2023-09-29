@@ -47,14 +47,14 @@ export default function Layout({ title, children }) {
 
       <div className="flex min-h-screen flex-col justify-between ">
         <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-[#1da1f2]">
             <Link href="/" className="text-lg font-bold">
-              <p className="text-blue-600">Lib-system</p>
+              <p className="text-#f0fdfa">Lib-system</p>
             </Link>
 
             <form
               onSubmit={submitHandler}
-              className="hidden w-full justify-center md:flex"
+              className="hiddenjustify-center md:flex"
             >
               <input
                 onChange={(e) => setQuery(e.target.value)}
@@ -63,11 +63,11 @@ export default function Layout({ title, children }) {
                 placeholder="Search products"
               />
               <button
-                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                className="rounded rounded-tl-none rounded-bl-none bg-yellow-200 p-1 text-sm dark:text-black"
                 type="submit"
                 id="button-addon2"
               >
-                <SearchIcon className="h-5 w-5"></SearchIcon>
+                <SearchIcon className="h-5 w-5 text-#f0fdfa"></SearchIcon>
               </button>
             </form>
 

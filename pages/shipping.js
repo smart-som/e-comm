@@ -23,14 +23,20 @@ export default function ShippingScreen() {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
     setValue('city', shippingAddress.city);
-    setValue('postalCode', shippingAddress.postalCode);
+    setValue('phone_number', shippingAddress.phone_number);
     setValue('country', shippingAddress.country);
   }, [setValue, shippingAddress]);
 
-  const submitHandler = ({ fullName, address, city, postalCode, country }) => {
+  const submitHandler = ({
+    fullName,
+    address,
+    city,
+    phone_number,
+    country,
+  }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, postalCode, country },
+      payload: { fullName, address, city, phone_number, country },
     });
     Cookies.set(
       'cart',
@@ -40,7 +46,7 @@ export default function ShippingScreen() {
           fullName,
           address,
           city,
-          postalCode,
+          phone_number,
           country,
         },
       })
@@ -99,19 +105,6 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="postalCode">Postal Code</label>
-          <input
-            className="w-full"
-            id="postalCode"
-            {...register('postalCode', {
-              required: 'Please enter postal code',
-            })}
-          />
-          {errors.postalCode && (
-            <div className="text-red-500 ">{errors.postalCode.message}</div>
-          )}
-        </div>
-        <div className="mb-4">
           <label htmlFor="country">Country</label>
           <input
             className="w-full"
@@ -122,6 +115,19 @@ export default function ShippingScreen() {
           />
           {errors.country && (
             <div className="text-red-500 ">{errors.country.message}</div>
+          )}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="phone_number">Phone Number</label>
+          <input
+            className="w-full"
+            id="phone_number"
+            {...register('phone_number', {
+              required: 'Please enter Phone number',
+            })}
+          />
+          {errors.phone_number && (
+            <div className="text-red-500 ">{errors.phone_number.message}</div>
           )}
         </div>
         <div className="mb-4 flex justify-between">

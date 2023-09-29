@@ -4,7 +4,11 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { PaystackButton } from 'react-paystack';
+import { useSession } from 'next-auth/react';
+import { getTimeStamp } from '@/Utils/date';
+import { toast } from 'react-toastify';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -14,20 +18,62 @@ function reducer(state, action) {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-    default:
-      state;
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false, errorPay: action.payload };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' };
+
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      };
   }
 }
 function OrderScreen() {
+  const { data: session } = useSession();
   // order/:id
   const { query } = useRouter();
   const orderId = query.id;
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    loading: true,
-    order: {},
-    error: '',
+  // set initial patstack props
+  const [paystackProps, setPaystackProps] = useState({
+    text: 'Pay with Paystack',
+    metadata: {
+      name: session.user.image,
+      //other data
+    },
+    email: session.user.email,
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+    onSuccess: (payload) => {
+      if (payload.status === 'success') onSuccessFulTransaction(payload);
+    },
+
+    onClose: () => alert('Wait! Yoouve not made your payment'),
   });
+
+  const [, setPaymentProcessed] = useState(false);
+
+  const [{ loading, error, order, loadingDeliver }, dispatch] = useReducer(
+    reducer,
+    {
+      loading: true,
+      order: {},
+      error: '',
+    }
+  );
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -56,6 +102,51 @@ function OrderScreen() {
     deliveredAt,
   } = order;
 
+  useEffect(() => {
+    setPaystackProps((prev) => ({
+      ...prev,
+      amount: totalPrice * 100,
+    }));
+  }, [order]);
+
+  //call method on successful transaction
+  const onSuccessFulTransaction = async (payload, order) => {
+    setPaymentProcessed(true);
+    dispatch({ type: 'FETCH_REQUEST' });
+
+    console.log(payload, order);
+    try {
+      const { data } = await axios.get(`/api/orders/${orderId}`);
+      const isPaid = true;
+      const paidAt = getTimeStamp();
+      dispatch({ type: 'FETCH_SUCCESS', payload: { ...data, isPaid, paidAt } });
+
+      await axios.put(`/api/orders/${orderId}/update`, {
+        isPaid,
+        paidAt,
+      });
+    } catch (error) {
+      dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
+    }
+
+    //todo: update order
+  };
+
+  async function deliverOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {}
+      );
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      toast.success('Order is delivered');
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
+  }
+
   return (
     <Layout title={`Order ${orderId}`}>
       <h1 className="mb-4 text-xl">{`Order ${orderId}`}</h1>
@@ -70,7 +161,7 @@ function OrderScreen() {
               <h2 className="mb-2 text-lg">Shipping Address</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+                {shippingAddress.city}, {shippingAddress.phone_number},{' '}
                 {shippingAddress.country}
               </div>
               {isDelivered ? (
@@ -79,14 +170,16 @@ function OrderScreen() {
                 <div className="alert-error">Not delivered</div>
               )}
             </div>
-
             <div className="card p-5">
               <h2 className="mb-2 text-lg">Payment Method</h2>
               <div>{paymentMethod}</div>
+
               {isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
               ) : (
-                <div className="alert-error">Not paid</div>
+                <>
+                  <div className="alert-error">Not paid</div>
+                </>
               )}
             </div>
 
@@ -158,6 +251,31 @@ function OrderScreen() {
                     <div>₦{totalPrice}</div>
                   </div>
                 </li>
+                {!isPaid && (
+                  <li>
+                    {
+                      <div className="w-full">
+                        <button
+                          disabled={loading}
+                          className="primary-button w-full"
+                        >
+                          <PaystackButton {...paystackProps} />
+                        </button>
+                      </div>
+                    }
+                  </li>
+                )}
+                {session.user.isAdmin && order.isPaid && !order.isDelivered && (
+                  <li>
+                    {loadingDeliver && <div>Loading...</div>}
+                    <button
+                      className="primary-button w-full"
+                      onClick={deliverOrderHandler}
+                    >
+                      Deliver Order
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -166,6 +284,5 @@ function OrderScreen() {
     </Layout>
   );
 }
-
 OrderScreen.auth = true;
 export default OrderScreen;

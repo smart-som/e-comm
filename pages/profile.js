@@ -3,7 +3,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import Layout from '@/components/Layout';
+import Layout from '@/components/Layout.1';
 import { getError } from '@/Utils/error';
 
 export default function ProfileScreen() {

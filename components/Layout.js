@@ -51,9 +51,10 @@ export default function Layout({ title, children }) {
             <Link href="/" className="text-lg font-bold">
               <p className="text-blue-600">Lib-system</p>
             </Link>
+
             <form
               onSubmit={submitHandler}
-              className="mx-auto  hidden w-full justify-center md:flex"
+              className="hidden w-full justify-center md:flex"
             >
               <input
                 onChange={(e) => setQuery(e.target.value)}
@@ -69,6 +70,7 @@ export default function Layout({ title, children }) {
                 <SearchIcon className="h-5 w-5"></SearchIcon>
               </button>
             </form>
+
             <div>
               <Link href="/cart" className="p-2">
                 Cart
@@ -131,7 +133,7 @@ export default function Layout({ title, children }) {
         </header>
         <main className="container m-auto mt-4 px-4">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
-          <p>Copyright © 2022 Lib-system</p>
+          <p>Copyright © 2023 Lib-system</p>
         </footer>
       </div>
     </>

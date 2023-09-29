@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { toast } from 'react-toastify';
-import Layout from '../../components/Layout';
-import Product from '../../models/Product';
+import Layout from '@/components/Layout';
 import db from '@/Utils/db';
 import { Store } from '@/Utils/Store';
+import Product from '@/models/Product';
 
 export default function ProductScreen(props) {
   const { product } = props;

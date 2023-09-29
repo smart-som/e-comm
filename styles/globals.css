@@ -122,6 +122,11 @@ Link {
   @apply rounded bg-gray-100 py-2  px-4 text-black shadow outline-none hover:bg-gray-200  active:bg-gray-300;
 }
 
+.logo {
+  height: 1em;
+  margin-left: 0.5rem;
+}
+
 input,
 select,
 textarea {
@@ -138,4 +143,9 @@ textarea {
 
 .alert-success {
   @apply my-3 rounded-lg bg-green-100 p-3 text-green-700;
+}
+.pay {
+  background-color: #3bb75e;
+}
+paystackButton {
 }

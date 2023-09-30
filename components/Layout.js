@@ -67,7 +67,7 @@ export default function Layout({ title, children }) {
                 type="submit"
                 id="button-addon2"
               >
-                <SearchIcon className="h-5 w-5 text-#f0fdfa"></SearchIcon>
+                <SearchIcon className="h-5 w-5"></SearchIcon>
               </button>
             </form>
 

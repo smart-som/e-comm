@@ -27,6 +27,8 @@ const data = {
       numReviews: 8,
       countInStock: 50,
       description: 'New Age Power bank',
+      isFeatured: true,
+      banner: '/images/banner1.jpg',
     },
     {
       name: 'Type C HDMI',
@@ -39,6 +41,8 @@ const data = {
       numReviews: 8,
       countInStock: 50,
       description: 'Hdmi',
+      isFeatured: true,
+      banner: '/images/banner2.png',
     },
     {
       name: 'Charger',

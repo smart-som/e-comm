@@ -60,7 +60,6 @@ export default function AdminProdcutsScreen() {
       toast.error(getError(err));
     }
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -105,8 +104,8 @@ export default function AdminProdcutsScreen() {
               <Link href="/admin/orders">Orders</Link>
             </li>
             <li>
-              <Link href="/admin/products">
-                <p className="font-bold">Products</p>
+              <Link href="/admin/products" className="font-bold">
+                Products
               </Link>
             </li>
             <li>
@@ -154,7 +153,13 @@ export default function AdminProdcutsScreen() {
                       <td className=" p-5 ">{product.countInStock}</td>
                       <td className=" p-5 ">{product.rating}</td>
                       <td className=" p-5 ">
-                        <Link href={`/admin/product/${product._id}`}>Edit</Link>
+                        <Link
+                          href={`/admin/product/${product._id}`}
+                          type="button"
+                          className="default-button"
+                        >
+                          Edit
+                        </Link>
                         &nbsp;
                         <button
                           onClick={() => deleteHandler(product._id)}

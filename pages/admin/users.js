@@ -82,8 +82,8 @@ function AdminUsersScreen() {
               <Link href="/admin/products">Products</Link>
             </li>
             <li>
-              <Link href="/admin/users">
-                <p className="font-bold">Users</p>
+              <Link href="/admin/users" className="font-bold">
+                Users
               </Link>
             </li>
           </ul>
@@ -115,10 +115,13 @@ function AdminUsersScreen() {
                       <td className=" p-5 ">{user.email}</td>
                       <td className=" p-5 ">{user.isAdmin ? 'YES' : 'NO'}</td>
                       <td className=" p-5 ">
-                        <Link href={`/admin/user/${user._id}`} passHref>
-                          <p type="button" className="default-button">
-                            Edit
-                          </p>
+                        <Link
+                          href={`/admin/user/${user._id}`}
+                          passHref
+                          type="button"
+                          className="default-button"
+                        >
+                          Edit
                         </Link>
                         &nbsp;
                         <button

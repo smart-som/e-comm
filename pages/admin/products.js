@@ -2,9 +2,9 @@ import { getError } from '@/Utils/error';
 import Layout from '@/components/Layout';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -148,7 +148,7 @@ export default function AdminProdcutsScreen() {
                     <tr key={product._id} className="border-b">
                       <td className=" p-5 ">{product._id.substring(20, 24)}</td>
                       <td className=" p-5 ">{product.name}</td>
-                      <td className=" p-5 ">₦{product.price}</td>
+                      <td className=" p-5 ">${product.price}</td>
                       <td className=" p-5 ">{product.category}</td>
                       <td className=" p-5 ">{product.countInStock}</td>
                       <td className=" p-5 ">{product.rating}</td>

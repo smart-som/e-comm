@@ -1,6 +1,6 @@
+import { getToken } from 'next-auth/jwt';
 import db from '@/Utils/db';
 import Product from '@/models/Product';
-import { getToken } from 'next-auth/jwt';
 
 const handler = async (req, res) => {
   const user = await getToken({ req });

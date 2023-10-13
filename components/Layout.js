@@ -47,7 +47,7 @@ export default function Layout({ title, children }) {
 
       <div className="flex min-h-screen flex-col justify-between ">
         <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-[#1da1f2]">
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-[#b5bdf2]">
             <Link href="/" className="text-lg font-bold">
               <p className="text-#f0fdfa">Lib-system</p>
             </Link>
@@ -79,8 +79,8 @@ export default function Layout({ title, children }) {
                     {cartItemsCount}
                   </span>
                 )}
-              </Link>
-
+              </Link>{' '}
+              &nbsp; &nbsp; &nbsp;
               {status === 'loading' ? (
                 'Loading'
               ) : session?.user ? (

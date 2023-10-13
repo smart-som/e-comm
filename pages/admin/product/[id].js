@@ -131,9 +131,7 @@ export default function AdminProductEditScreen() {
       toast.error(getError(err));
     }
   };
-  {
-    /* <a></a> */
-  }
+
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -146,8 +144,8 @@ export default function AdminProductEditScreen() {
               <Link href="/admin/orders">Orders</Link>
             </li>
             <li>
-              <Link href="/admin/products">
-                <p className="font-bold">Products</p>
+              <Link href="/admin/products" className="font-bold">
+                Products
               </Link>
             </li>
             <li>

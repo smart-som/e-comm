@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
-import Layout from '@/components/Layout';
-import ProductItem from '@/components/ProductItem';
-import { Store } from '@/Utils/Store';
-import db from '@/Utils/db';
-import Product from '@/models/Product';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
+import { Store } from '@/Utils/Store';
+import Layout from '@/components/Layout';
+import ProductItem from '@/components/ProductItem';
+import Product from '@/models/Product';
+import db from '@/Utils/db';
 
 export default function Home({ products, featuredProducts }) {
   const { state, dispatch } = useContext(Store);

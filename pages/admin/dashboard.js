@@ -82,8 +82,8 @@ function AdminDashboardScreen() {
         <div>
           <ul>
             <li>
-              <Link href="/admin/dashboard">
-                <p className="font-bold">Dashboard</p>
+              <Link href="/admin/dashboard" className="font-bold">
+                Dashboard
               </Link>
             </li>
             <li>

@@ -255,10 +255,7 @@ function OrderScreen() {
                   <li>
                     {
                       <div className="w-full">
-                        <button
-                          disabled={loading}
-                          className="primary-button w-full"
-                        >
+                        <button disabled={loading} className="pay w-full">
                           <PaystackButton {...paystackProps} />
                         </button>
                       </div>

@@ -18,6 +18,19 @@ a {
   box-sizing: border-box;
 }
 
+@media screen and (min-width: 201px) {
+  .input {
+    width: 120px;
+    justify-content: center;
+    /* display: flex; */
+  }
+}
+@media (min-width: 768px) {
+  .input {
+    width: 200px;
+  }
+}
+
 .card {
   @apply mb-5  block   rounded-lg border border-gray-200  shadow-md;
 }

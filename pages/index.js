@@ -38,8 +38,9 @@ export default function Home({ products, featuredProducts }) {
           </div>
         ))}
       </Carousel>
-      <h2 className="h2 my-4">Latest Products</h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <br />
+      <h2 className="h2 my-4 text-lg">Latest Products</h2>
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
           <ProductItem
             product={product}

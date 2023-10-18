@@ -39,7 +39,10 @@ export default function Layout({ title, children }) {
     <>
       <Head>
         <title>{title ? title + ' - Lib-System' : 'Lib-System'}</title>
-        <meta name="description" content="Ecommerce Website" />
+        <meta
+          name="description"
+          content="Ecommerce Website, phone accessoeies, headset, charger type c usb, key board, computer accessories phon in benin benin city "
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -47,19 +50,19 @@ export default function Layout({ title, children }) {
 
       <div className="flex min-h-screen flex-col justify-between ">
         <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-[#b5bdf2]">
-            <Link href="/" className="text-lg font-bold">
-              <p className="text-#f0fdfa">Lib-system</p>
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-[#b5bdf2] nav">
+            <Link href="/" className="sm:text-md md:text-lg font-bold ">
+              <p className="sm:text-md text-#f0fdfa">Lib-system</p>
             </Link>
 
             <form
               onSubmit={submitHandler}
-              className="hiddenjustify-center md:flex"
+              className="hiddenjustify-center sm:flex"
             >
               <input
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
-                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                className="rounded-tr-none rounded-br-none p-1 text-sm sm:40px focus:ring-0 input"
                 placeholder="Search products"
               />
               <button
@@ -80,7 +83,7 @@ export default function Layout({ title, children }) {
                   </span>
                 )}
               </Link>{' '}
-              &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
               {status === 'loading' ? (
                 'Loading'
               ) : session?.user ? (

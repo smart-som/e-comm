@@ -19,10 +19,8 @@ a {
 }
 
 @media screen and (min-width: 201px) {
-  .input {
-    width: 120px;
-    justify-content: center;
-    /* display: flex; */
+  .form {
+    display: none;
   }
 }
 @media (min-width: 768px) {

@@ -57,7 +57,7 @@ export default function Layout({ title, children }) {
 
             <form
               onSubmit={submitHandler}
-              className="hiddenjustify-center sm:flex"
+              className="hiddenjustify-center sm:flex form"
             >
               <input
                 onChange={(e) => setQuery(e.target.value)}

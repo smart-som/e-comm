@@ -3,20 +3,15 @@ import User from '@/models/User';
 import { getToken } from 'next-auth/jwt';
 
 const handler = async (req, res) => {
-  try {
-    const user = await getToken({ req });
-    if (!user || !user.isAdmin) {
-      return res.status(401).send({ message: 'Admin sign-in required' });
-    }
+  const user = await getToken({ req });
+  if (!user || !user.isAdmin) {
+    return res.status(401).send('admin signin required');
+  }
 
-    if (req.method === 'DELETE') {
-      await deleteHandler(req, res);
-    } else {
-      res.status(400).send({ message: 'Method not allowed' });
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send({ message: 'Internal Server Error' });
+  if (req.method === 'DELETE') {
+    return deleteHandler(req, res);
+  } else {
+    return res.status(400).send({ message: 'Method not allowed' });
   }
 };
 
